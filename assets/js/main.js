@@ -1,109 +1,104 @@
 var iUp = (function () {
-	var t = 0,
-		d = 150,
+	var time = 0,
+		duration = 150,
 		clean = function () {
-			t = 0;
+			time = 0;
 		},
-		up = function (e) {
+		up = function (element) {
 			setTimeout(function () {
-				$(e).addClass("up")
-			}, t);
-			t += d;
+				element.classList.add("up");
+			}, time);
+			time += duration;
 		},
-		down = function (e) {
-			$(e).removeClass("up");
+		down = function (element) {
+			element.classList.remove("up");
 		},
-		toggle = function (e) {
+		toggle = function (element) {
 			setTimeout(function () {
-				$(e).toggleClass("up")
-			}, t);
-			t += d;
+				element.classList.toggle("up");
+			}, time);
+			time += duration;
 		};
 	return {
 		clean: clean,
 		up: up,
 		down: down,
 		toggle: toggle
-	}
+	};
 })();
 
-$(document).ready(function () {
-
-	// 获取一言数据
-	fetch('https://v1.hitokoto.cn').then(function (res) {
-		return res.json();
-	}).then(function (e) {
-		$('#description').html(e.hitokoto + "<br/> -「<strong>" + e.from + "</strong>」")
-	}).catch(function (err) {
-		console.error(err);
-	})
-
-	
-	// var url = 'https://query.yahooapis.com/v1/public/yql' + 
-    // '?q=' + encodeURIComponent('select * from json where url=@url') +
-    // '&url=' + encodeURIComponent('https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=8') +
-	// '&format=json&callback=?';
-
+function getBingImages(imgUrls) {
 	/**
 	 * 获取Bing壁纸
-	 * 原先 YQL 已经无法提供服务了
-	 * 改用 JsonBird：https://bird.ioliu.cn/
-	 * 改用 JsoBird已经失效，换用github博主开放的端口：https://realwds-api.vercel.app/bing
-	 * 
+	 * 先使用 GitHub Action 每天获取 Bing 壁纸 URL 并更新 images.json 文件
+	 * 然后读取 images.json 文件中的数据
 	 */
-	var url = 'https://realwds-api.vercel.app/bing?count=8';
-	var imgUrls = JSON.parse(sessionStorage.getItem("imgUrls"));
-	var index = sessionStorage.getItem("index");
-	var $panel = $('#panel');
-	if(imgUrls == null){
-		imgUrls = new Array();
-		index = 0;		
-		$.get(url,function (result) {
-			images = result.data.images;
-			console.log("数据为：");
-			console.log(images);
-			for (let i = 0; i < images.length; i++) {
-				const item = images[i];
-				imgUrls.push(item.url);
-			}
-			var imgUrl = imgUrls[index];
-			var url = "https://www.bing.com"+imgUrl;
-			$panel.css("background", "url('"+url+"') center center no-repeat #666");
-			$panel.css("background-size", "cover");
-			sessionStorage.setItem("imgUrls",JSON.stringify(imgUrls));
-			sessionStorage.setItem("index",index);
-			});
-	}else{
-		if(index == 7)
-			index = 0;
-		else
-			index++;
-		var imgUrl = imgUrls[index];
-		var url = "https://www.bing.com"+imgUrl;
-		$panel.css("background", "url('"+url+"') center center no-repeat #666");
-		$panel.css("background-size", "cover");
-		sessionStorage.setItem("index",index);
-	}
-	
-	$(".iUp").each(function (i, e) {
-		iUp.up(e);
+	var indexName = "bing-image-index";
+	var index = sessionStorage.getItem(indexName);
+	var panel = document.querySelector('#panel');
+	if (isNaN(index) || index == 7) index = 0;
+	else index++;
+	var imgUrl = imgUrls[index];
+	var url = "https://www.cn.bing.com" + imgUrl;
+	panel.style.background = "url('" + url + "') center center no-repeat #666";
+	panel.style.backgroundSize = "cover";
+	sessionStorage.setItem(indexName, index);
+}
+
+function decryptEmail(encoded) {
+	var address = atob(encoded);
+	window.location.href = "mailto:" + address;
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+	// 获取一言数据
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function () {
+		if (this.readyState == 4 && this.status == 200) {
+			var res = JSON.parse(this.responseText);
+			document.getElementById('description').innerHTML = res.hitokoto + "<br/> -「<strong>" + res.from + "</strong>」";
+		}
+	};
+	xhr.open("GET", "https://v1.hitokoto.cn", true);
+	xhr.send();
+
+	var iUpElements = document.querySelectorAll(".iUp");
+	iUpElements.forEach(function (element) {
+		iUp.up(element);
 	});
 
-	$(".js-avatar")[0].onload = function () {
-		$(".js-avatar").addClass("show");
-	}
+	var avatarElement = document.querySelector(".js-avatar");
+	avatarElement.addEventListener('load', function () {
+		avatarElement.classList.add("show");
+	});
 });
 
-$('.btn-mobile-menu__icon').click(function() {
-    if ($('.navigation-wrapper').css('display') == "block") {
-      $('.navigation-wrapper').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
-        $('.navigation-wrapper').toggleClass('visible animated bounceOutUp');
-        $('.navigation-wrapper').off('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend');
-      });
-      $('.navigation-wrapper').toggleClass('animated bounceInDown animated bounceOutUp');
+var btnMobileMenu = document.querySelector('.btn-mobile-menu__icon');
+var navigationWrapper = document.querySelector('.navigation-wrapper');
 
-    } else {
-      $('.navigation-wrapper').toggleClass('visible animated bounceInDown');
-    }
-    $('.btn-mobile-menu__icon').toggleClass('social iconfont icon-list social iconfont icon-angleup animated fadeIn');
+btnMobileMenu.addEventListener('click', function () {
+	if (navigationWrapper.style.display == "block") {
+		navigationWrapper.addEventListener('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+			navigationWrapper.classList.toggle('visible');
+			navigationWrapper.classList.toggle('animated');
+			navigationWrapper.classList.toggle('bounceOutUp');
+			navigationWrapper.removeEventListener('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', arguments.callee);
+		});
+		navigationWrapper.classList.toggle('animated');
+		navigationWrapper.classList.toggle('bounceInDown');
+		navigationWrapper.classList.toggle('animated');
+		navigationWrapper.classList.toggle('bounceOutUp');
+	} else {
+		navigationWrapper.classList.toggle('visible');
+		navigationWrapper.classList.toggle('animated');
+		navigationWrapper.classList.toggle('bounceInDown');
+	}
+	btnMobileMenu.classList.toggle('social');
+	btnMobileMenu.classList.toggle('iconfont');
+	btnMobileMenu.classList.toggle('icon-list');
+	btnMobileMenu.classList.toggle('social');
+	btnMobileMenu.classList.toggle('iconfont');
+	btnMobileMenu.classList.toggle('icon-angleup');
+	btnMobileMenu.classList.toggle('animated');
+	btnMobileMenu.classList.toggle('fadeIn');
 });
