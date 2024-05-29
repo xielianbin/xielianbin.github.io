@@ -1,0 +1,121 @@
+@charset "utf-8";
+
+/* CSS Document */
+* {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	border: 0;
+}
+
+body {
+	font-size: 12px;
+	font-family: "微软雅黑";
+	padding: 1% 1%;
+	background: rgba(119, 152, 241, 0.2)
+}
+
+a:link,
+a:visited {
+	color: #000;
+	text-decoration: none;
+	outline: none;
+}
+
+a:hover {
+	text-decoration: none;
+	color: #0882B1;
+}
+
+/*head开始*/
+#head {
+	/* margin :上右下左 */
+	position: fixed;
+	width: 23%;
+	height: 100%;
+	background: white;
+	/*  边框：粗细  样式 颜色 */
+	border: 3px solid;
+	border-color: rgba(119, 152, 241, 0.3);
+}
+
+.head-photo {
+	/* 比例 1.218 */
+	width: 40%;
+	height: 49%;
+	margin: 0 auto;
+	margin-top: 60px;
+}
+.head-photo img{
+	max-width: 100%;
+	max-height: 100%;
+}
+.head-info{
+
+	width: 200px;
+	height: 300px;
+	margin: 0 auto;
+	background: rgba(119, 152, 241, 0.4);
+}
+#pagecontent {
+	margin-left: 24%;
+	float: left;
+	width: 100%;
+	height: 100%;
+	background: rgba(119, 152, 241, 0.4);
+}
+
+
+/*head结束*/
+/*content开始*/
+/*左上半部分*/
+#content {
+	width: 100%;
+	height: auto;
+	margin: 5px 5px;
+	margin-top: 30px;
+	overflow: hidden;
+}
+
+.content-block {
+
+	width: 100%;
+	height: 300px;
+	margin: 5px 5px;
+	margin-bottom: 30px;
+	overflow: hidden;
+	background: white;
+}
+
+.content-title {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.content-line {
+	width: 60%;
+	height: 2px;
+	margin-top: 5px;
+	margin-bottom: 8px;
+	background: rgba(24, 25, 26, 0.7)
+}
+
+.content-list {
+	margin: 5px 5px;
+	font-size: 15px;
+}
+
+.content-list li {
+	margin: 5px 5px;
+}
+
+/*footer开始*/
+#footer {
+	width: 100%;
+	height: 77px;
+	text-align: center;
+	background: #c8e5e9;
+	color: #666;
+}
+
+/*footer结束*/
