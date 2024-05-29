@@ -9,7 +9,7 @@
 }
 
 body {
-	font-size: 12px;
+	font-size: 14px;
 	font-family: "微软雅黑";
 	padding: 1% 1%;
 	background: rgba(119, 152, 241, 0.2)
@@ -17,7 +17,7 @@ body {
 
 a:link,
 a:visited {
-	color: #000;
+	color: #336699;
 	text-decoration: none;
 	outline: none;
 }
@@ -31,38 +31,87 @@ a:hover {
 #head {
 	/* margin :上右下左 */
 	position: fixed;
+	float: left;
 	width: 23%;
 	height: 100%;
 	background: white;
 	/*  边框：粗细  样式 颜色 */
 	border: 3px solid;
 	border-color: rgba(119, 152, 241, 0.3);
+	text-align: center;
 }
 
 .head-photo {
 	/* 比例 1.218 */
-	width: 40%;
-	height: 49%;
+	width: 110px;
+	height: 135px;
 	margin: 0 auto;
 	margin-top: 60px;
+	padding: 0;
 }
-.head-photo img{
+
+.head-photo img {
 	max-width: 100%;
 	max-height: 100%;
+	display: block;
 }
-.head-info{
 
-	width: 200px;
-	height: 300px;
+.head-info {
+	width: 100%;
 	margin: 0 auto;
-	background: rgba(119, 152, 241, 0.4);
+	margin-top: 20px;
+}
+
+.head-info-left {
+	width: 25%;
+	float: left;
+	text-align: right;
+}
+
+.head-info-right {
+	width: 75%;
+	float: right;
+	text-align: left;
+}
+.head-info-1 {
+	margin-bottom: 10px;
+}
+
+.head-function {
+	width: 80%;
+	margin: 0 auto;
+	margin-top: 20px;
+}
+.head-function-list{
+	font-size: 15px;
+	height: 25px;
+	margin: 5px 0px 5px 0px;
+}
+.head-function-left {
+	width: 50%;
+	height: 100%;
+	float: left;
+	text-align: right;
+}
+
+.head-function-right {
+	width: 50%;
+	height: 100%;
+	float: right;
+	text-align: left;
+}
+
+.head-footer {
+	font-size: 13px;
+	width: 100%;
+	margin: 0 auto;
+	margin-top: 120px;
 }
 #pagecontent {
-	margin-left: 24%;
-	float: left;
-	width: 100%;
+	float: right;
+	width: 75%;
 	height: 100%;
-	background: rgba(119, 152, 241, 0.4);
+	background: rgba(119, 152, 241, 0.2);
 }
 
 
@@ -73,36 +122,41 @@ a:hover {
 	width: 100%;
 	height: auto;
 	margin: 5px 5px;
-	margin-top: 30px;
 	overflow: hidden;
 }
-
+.content-gap {
+	width: 100%;
+	height: 20px;
+	margin: 0px 0px;
+	overflow: hidden;
+}
 .content-block {
-
 	width: 100%;
 	height: 300px;
 	margin: 5px 5px;
-	margin-bottom: 30px;
 	overflow: hidden;
 	background: white;
 }
 
 .content-title {
-	font-size: 20px;
+	font-size: 19px;
+	padding-left: 5px;
 	font-weight: bold;
+	color: #336699;
 }
 
 .content-line {
 	width: 60%;
 	height: 2px;
 	margin-top: 5px;
+	margin-left: 5px;
 	margin-bottom: 8px;
 	background: rgba(24, 25, 26, 0.7)
 }
 
 .content-list {
 	margin: 5px 5px;
-	font-size: 15px;
+	margin-left: 20px;
 }
 
 .content-list li {
