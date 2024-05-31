@@ -33,8 +33,9 @@ a:hover {
 	position: fixed;
 	float: left;
 	width: 23%;
-	height: 100%;
-	background: white;
+	height: auto;
+	padding-bottom: 40px;
+	background: rgba(254, 254, 254, 1);
 	/*  边框：粗细  样式 颜色 */
 	border: 3px solid;
 	border-color: rgba(119, 152, 241, 0.3);
@@ -59,6 +60,7 @@ a:hover {
 .head-info {
 	width: 100%;
 	margin: 0 auto;
+	height: auto;
 	margin-top: 20px;
 }
 
@@ -73,6 +75,16 @@ a:hover {
 	float: right;
 	text-align: left;
 }
+.head-logol-left {
+	width: 20%;
+	padding-left: 10%;
+	text-align: right;
+}
+
+.head-logol-right {
+	width: 80%;
+	text-align: left;
+}
 .head-info-1 {
 	margin-bottom: 10px;
 }
@@ -80,7 +92,12 @@ a:hover {
 .head-function {
 	width: 80%;
 	margin: 0 auto;
+	height: auto;
 	margin-top: 20px;
+}
+.head-logol{
+	width:20px;
+	height:20px;
 }
 .head-function-list{
 	font-size: 15px;
@@ -92,6 +109,7 @@ a:hover {
 	height: 100%;
 	float: left;
 	text-align: right;
+	text-decoration: underline;
 }
 
 .head-function-right {
@@ -99,19 +117,20 @@ a:hover {
 	height: 100%;
 	float: right;
 	text-align: left;
+	text-decoration: underline;
 }
 
 .head-footer {
 	font-size: 13px;
 	width: 100%;
 	margin: 0 auto;
-	margin-top: 120px;
+	margin-top: 10px;
 }
 #pagecontent {
 	float: right;
 	width: 75%;
 	height: 100%;
-	background: rgba(119, 152, 241, 0.2);
+	background: rgba(119, 152, 241, 0.1);
 }
 
 
@@ -119,9 +138,10 @@ a:hover {
 /*content开始*/
 /*左上半部分*/
 #content {
-	width: 100%;
+	width: auto;
 	height: auto;
 	margin: 5px 5px;
+	margin-right: 10px;
 	overflow: hidden;
 }
 .content-gap {
@@ -132,10 +152,12 @@ a:hover {
 }
 .content-block {
 	width: 100%;
-	height: 300px;
+	height: auto;
 	margin: 5px 5px;
 	overflow: hidden;
-	background: white;
+	padding-top: 10px;
+	padding-bottom: 15px;
+	background: rgba(254, 254, 254, 1);
 }
 
 .content-title {
@@ -150,16 +172,27 @@ a:hover {
 	height: 2px;
 	margin-top: 5px;
 	margin-left: 5px;
-	margin-bottom: 8px;
+	margin-bottom: 0px;
 	background: rgba(24, 25, 26, 0.7)
 }
+.content-block-sub {
+	padding-top: 5px;
+	margin: 5px 5px;
+	margin-left: 10px;
+}
 
-.content-list {
+.content-block-sub-title {
+	font-size: 15px;
+	font-weight: bold;
+	margin: 5px 5px;
+	margin-left: 20px;
+}
+.content-block-sub-list {
 	margin: 5px 5px;
 	margin-left: 20px;
 }
 
-.content-list li {
+.content-block-sub-list li {
 	margin: 5px 5px;
 }
 
