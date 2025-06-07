@@ -3,199 +3,1419 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="Lianbin, Xie's personal introduction. 谢练彬的个人介绍">
     <meta name="keywords" content="Lianbin, Xie, 谢练彬">
     <meta name="author" content="Lianbin, Xie">
     <title>Lianbin, Xie (谢练彬)</title>
     <link rel="shortcut icon" href="imgs/favicon.ico" />
-
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #2c5282;
+            --accent-color: #e53e3e;
+            --background-color: #f8fafc;
+            --text-color: #2d3748;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --hover-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+            --gradient-start: #1a365d;
+            --gradient-end: #2c5282;
+            --sidebar-width: 300px;
+            --sidebar-collapsed-width: 80px;
+            --header-height: 60px;
+        }
+
+        * {
             margin: 0;
             padding: 0;
-            display: flex;
-            color: #333;
+            box-sizing: border-box;
         }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+        }
+
         .sidebar {
-            width: 250px;
+            width: var(--sidebar-width);
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            padding: 2rem;
+            position: fixed;
             height: 100vh;
-            background-color: #f4f4f4;
-            padding: 20px;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            overflow-y: auto;
+            border-right: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .sidebar.collapsed {
+            width: var(--sidebar-collapsed-width);
+            padding: 1rem;
+        }
+
+        .profile-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: block;
+            object-fit: cover;
+            border: 4px solid var(--secondary-color);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-name {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .profile-title {
+            text-align: center;
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .profile-info {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border-radius: 12px;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: var(--card-shadow);
+        }
+
+        .profile-info p {
+            margin: 0.8rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text-color);
+            font-size: 0.95rem;
+        }
+
+        .profile-info p:last-child {
+            font-size: 0.85rem;
+        }
+
+        .profile-info svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--secondary-color);
+            stroke-width: 2;
+            fill: none;
+            transition: all 0.3s ease;
+        }
+
+        .profile-info p:hover svg {
+            transform: scale(1.1);
+            stroke: var(--primary-color);
+        }
+
+        .social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border-radius: 12px;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: var(--card-shadow);
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: var(--text-color);
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .social-links a:hover {
+            background: var(--secondary-color);
+            color: white;
+            transform: translateX(8px);
+            border-color: var(--secondary-color);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .social-links img {
+            width: 24px;
+            height: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-nav {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border-radius: 12px;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: var(--card-shadow);
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 1.2rem;
+            color: var(--text-color);
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 0.8rem;
+            transition: all 0.3s ease;
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .sidebar-nav a:hover {
+            background: var(--secondary-color);
+            color: white;
+            transform: translateX(8px);
+            border-color: var(--secondary-color);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .sidebar-nav a.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .sidebar-nav a svg {
+            width: 20px;
+            height: 20px;
+            margin-right: 1rem;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-nav a:hover svg,
+        .sidebar-nav a.active svg {
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+        }
+
+        .content {
+            margin-left: var(--sidebar-width);
+            padding: 2rem;
+            width: calc(100% - var(--sidebar-width));
+            transition: all 0.3s ease;
+        }
+
+        .content.expanded {
+            margin-left: var(--sidebar-collapsed-width);
+            width: calc(100% - var(--sidebar-collapsed-width));
+        }
+
+        .section {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .section:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--hover-shadow);
+            border-color: rgba(226, 232, 240, 1);
+        }
+
+        .section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+            font-size: 1.4rem;
+        }
+
+        .section ul {
+            list-style: none;
+        }
+
+        .section ul li {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .section ul li::before {
+            content: "•";
+            color: var(--secondary-color);
+            position: absolute;
+            left: 0;
+        }
+
+        .mobile-header {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
+            right: 0;
+            height: var(--header-height);
+            background: white;
+            box-shadow: var(--card-shadow);
+            z-index: 1001;
+            padding: 0 1rem;
+            align-items: center;
+            justify-content: space-between;
         }
-        .sidebar img {
-			
-			margin-left: 25%;
-			margin-right: 25%;
-            width: 50%;
-			hight:50%;
-            border-radius: 45%;
-            margin-bottom: 10px;
-            margin-top: 20px;
+
+        .mobile-header .profile-img {
+            width: 40px;
+            height: 40px;
+            margin: 0;
+            margin-left: 2rem;
+            border: 2px solid var(--secondary-color);
         }
-        .sidebar .links {
-            margin-top: 20px;
+
+        .mobile-header .title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-left: 1rem;
         }
-        .sidebar .links a {
-            display: block;
-            margin-bottom: 10px;
-            color: #333;
-            text-decoration: none;
-        }
-        .sidebar .links a:hover {
-            text-decoration: underline;
-        }
-        .content {
-            margin-left: 300px;
-            padding: 20px;
-            width: calc(100% - 270px);
-            box-sizing: border-box;
-        }
-        .section {
-            margin-bottom: 40px;
-        }
-        .section h2 {
-            border-bottom: 2px solid #f4f4f4;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-        .section ul {
-            list-style-type: disc;
-            padding-left: 20px;
-        }
-        .section ul li {
-            margin-bottom: 10px;
-        }
-        .nav {
+
+        .mobile-nav {
+            display: none;
             position: fixed;
-            top: 20px;
-            right: 20px;
-			
+            top: var(--header-height);
+            left: 0;
+            right: 0;
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            box-shadow: var(--card-shadow);
+            z-index: 1000;
+            padding: 0.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(226, 232, 240, 0.8);
         }
-        .nav a {
+
+        .mobile-nav.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-nav a {
             display: block;
-            margin-bottom: 10px;
-            color: #ffffff;
-			
+            padding: 1rem;
+            color: var(--text-color);
             text-decoration: none;
-            padding: 5px 10px;
-            background-color: #00cd66;
-            border-radius: 5px;
+            border-radius: 8px;
+            margin-bottom: 0.3rem;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border: 1px solid rgba(226, 232, 240, 0.8);
         }
-        .nav a:hover {
-            background-color: #eeb4b4;
+
+        .mobile-nav a:hover {
+            background: var(--secondary-color);
+            color: white;
+            transform: translateX(10px);
+            border-color: var(--secondary-color);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .mobile-nav a.active {
+            background: var(--primary-color) !important;
+            color: white !important;
+            transform: translateX(10px);
+            border-color: var(--primary-color) !important;
+            box-shadow: var(--hover-shadow);
+        }
+
+        .mobile-nav a:active {
+            transform: translateX(5px);
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .mobile-header .toggle-sidebar {
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+        }
+
+        .mobile-header .toggle-sidebar:hover {
+            background: rgba(226, 232, 240, 0.5);
+        }
+
+        .mobile-header .toggle-sidebar:active {
+            background: rgba(226, 232, 240, 0.8);
+        }
+
+        .mobile-header .toggle-sidebar svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-header .toggle-sidebar:hover svg {
+            stroke: var(--secondary-color);
+        }
+
+        .mobile-header .toggle-sidebar.active svg {
+            transform: rotate(90deg);
+        }
+
+        @media (max-width: 768px) {
+            .mobile-header {
+                display: flex;
+                padding: 0 1rem;
+                height: var(--header-height);
+                background: white;
+                box-shadow: var(--card-shadow);
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 1001;
+            }
+
+            .mobile-nav {
+                display: block;
+            }
+
+            .mobile-header .profile-img {
+                width: 40px;
+                height: 40px;
+                margin: 0;
+                margin-left: 3rem;
+                border: 2px solid var(--secondary-color);
+            }
+
+            .mobile-header .title {
+                font-size: 1.2rem;
+                font-weight: bold;
+                color: var(--primary-color);
+                margin-left: 1rem;
+            }
+
+            .content {
+                margin-left: 0;
+                width: 100%;
+                padding-top: calc(var(--header-height) + 1rem);
+            }
+
+            /* 在移动端隐藏桌面版侧边栏 */
+            .sidebar {
+                display: none;
+            }
+
+            /* 在移动端隐藏桌面版切换按钮 */
+            .toggle-sidebar:not(.mobile-header .toggle-sidebar) {
+                display: none;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-header,
+            .mobile-nav {
+                display: none;
+            }
+
+            .toggle-sidebar:not(.mobile-header .toggle-sidebar) {
+                display: flex;
+            }
+
+            .sidebar {
+                display: block;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section {
+                padding: 1rem;
+            }
+
+            .profile-img {
+                width: 100px;
+                height: 100px;
+            }
+
+            .profile-name {
+                font-size: 1.2rem;
+            }
+
+            .profile-title {
+                font-size: 0.9rem;
+            }
+
+            .profile-info p {
+                font-size: 0.9rem;
+            }
+
+            .sidebar-nav a {
+                padding: 0.6rem;
+                font-size: 0.9rem;
+            }
+
+            .social-links a {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* 添加触摸滑动支持 */
+        @media (hover: none) {
+            .sidebar {
+                touch-action: pan-y;
+            }
+
+            .sidebar-nav a:active {
+                background-color: var(--background-color);
+            }
+
+            .social-links a:active {
+                background-color: var(--background-color);
+            }
+        }
+
+        .education-list,
+        .research-list,
+        .competition-list,
+        .project-list,
+        .work-list {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+
+        .education-item {
+            display: grid;
+            grid-template-columns: 2fr 2fr 1fr 2fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            margin-bottom: 0.4rem;
+            background: var(--background-color);
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .research-item,
+        .competition-item,
+        .project-item,
+        .work-item {
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            background: var(--background-color);
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .education-item:hover,
+        .research-item:hover,
+        .competition-item:hover,
+        .project-item:hover,
+        .work-item:hover {
+            transform: translateX(8px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .education-item .school,
+        .research-item .title,
+        .competition-item .name,
+        .project-item .name,
+        .work-item .company {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .education-item .major,
+        .research-item .description,
+        .competition-item .description,
+        .project-item .description,
+        .work-item .description {
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+            display: block;
+            line-height: 1.6;
+        }
+
+        .education-item .degree,
+        .research-item .journal,
+        .competition-item .award,
+        .project-item .role,
+        .work-item .position {
+            color: var(--secondary-color);
+            font-weight: 500;
+            display: inline-block;
+            margin-right: 1rem;
+        }
+
+        .education-item .period,
+        .research-item .status,
+        .competition-item .date,
+        .project-item .date,
+        .work-item .period {
+            color: #666;
+            font-size: 0.9rem;
+            display: inline-block;
+        }
+
+        .research-item .meta,
+        .competition-item .meta,
+        .project-item .meta,
+        .work-item .meta {
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .education-item {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+                padding: 0.8rem;
+            }
+
+            .research-item,
+            .competition-item,
+            .project-item,
+            .work-item {
+                padding: 1rem;
+            }
+
+            .education-item .period,
+            .research-item .status,
+            .competition-item .date,
+            .project-item .date,
+            .work-item .period {
+                font-size: 0.85rem;
+                color: #888;
+            }
+
+            .research-item .meta,
+            .competition-item .meta,
+            .project-item .meta,
+            .work-item .meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.3rem;
+            }
+        }
+
+        /* 技能特征样式 */
+        .skills-list {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+
+        .skill-category {
+            margin-bottom: 1.2rem;
+        }
+
+        .skill-category h3 {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.3rem;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+
+        .skill-tag {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            color: var(--text-color);
+            padding: 0.4rem 0.8rem;
+            border-radius: 16px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .skill-tag:hover {
+            background: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+
+        /* 证书样式 */
+        .certificate-list {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+
+        .certificate-item {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            border-left: 3px solid var(--secondary-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .certificate-item:hover {
+            transform: translateX(8px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .certificate-item .title {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            display: block;
+        }
+
+        .certificate-item .issuer {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+
+        .certificate-item .date {
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        /* 个人介绍样式 */
+        .introduction-list {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+
+        .introduction-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .introduction-item {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            padding: 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .introduction-item:hover {
+            transform: translateX(8px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .introduction-item .label {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            display: block;
+            font-size: 0.95rem;
+        }
+
+        .introduction-item .value {
+            color: var(--text-color);
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            .introduction-grid {
+                grid-template-columns: 1fr;
+                gap: 0.6rem;
+            }
+
+            .introduction-item {
+                padding: 0.8rem;
+            }
+        }
+
+        /* 联系我模块样式 */
+        .contact-section {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 2rem;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            transition: all 0.3s ease;
+        }
+
+        .contact-section:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--hover-shadow);
+            border-color: rgba(226, 232, 240, 1);
+        }
+
+        .contact-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-color);
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateX(8px);
+            box-shadow: var(--hover-shadow);
+            border-color: var(--secondary-color);
+        }
+
+        .contact-item svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--secondary-color);
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .contact-item .label {
+            font-weight: 500;
+            margin-right: 0.3rem;
+            color: var(--primary-color);
+        }
+
+        .contact-item .value {
+            color: var(--secondary-color);
+        }
+
+        @media (max-width: 768px) {
+            .contact-info {
+                gap: 1rem;
+            }
+            
+            .contact-item {
+                padding: 0.6rem 1rem;
+            }
+        }
+
+        /* 欢迎模块样式 */
+        .welcome-section {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .welcome-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            opacity: 0.5;
+        }
+
+        .welcome-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .welcome-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .welcome-description {
+            font-size: 1rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .welcome-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .welcome-title {
+                font-size: 1.8rem;
+            }
+
+            .welcome-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .welcome-description {
+                font-size: 0.95rem;
+            }
         }
     </style>
 </head>
-<body style="font-size: 14px;line-height: 1.2; padding:0px;margin:0px;">
 
-<div class="sidebar">
-    <div class="simg"><img src="imgs/xielianbin.png" alt="个人图像"></div>
-	<p style="text-align: center;">Dr. Lianbin Xie, the B.S, the M.S</p>	
-	<p style="text-align: center;font-size: 16px;font-weight: bold;padding:0px;margin-top:-5px;">谢练彬</p>
-	<div style="margin-left:20px;">
-		<p>学历：学术硕士</p>
-		<p>学校: 成都理工大学</p>
-		<p>专业: 计算机科学与技术</p>
-		<p>邮箱: 2826389624@qq.com</p>
-	</div>
-	<div class="links" >
-		<div  style="margin-left:20px;">
-			<a href="https://github.com/xielianbin
-			" target="_blank" ><img src="imgs/github.png" style="width:20px;  hight:20px;margin:0px;padding:0px;"><p style="margin-top:-21px;margin-left:25px;">https://github.com/xielianbin</p>
-			</a>
-			<a href="https://orcid.org/0009-0005-1747-731X" target="_blank"><img src="imgs/orcid.png" style="width:20px;  hight:20px;margin:0px;padding:0px;"><p style="margin-top:-21px;margin-left:25px;">0009-0005-1747-731X</p></a>
-			<a href="https://leetcode.cn/u/xielianbin/" target="_blank"><img src="imgs/leetcode.png" style="width:20px;  hight:20px;margin:0px;padding:0px;"><p style="margin-top:-21px;margin-left:25px;">https://leetcode.cn/u/xielianbin/</p></a>
-		</div>
-	</div>
-</div>
+<body>
+    <div class="mobile-header">
+        <img src="imgs/xielianbin.png" alt="个人图像" class="profile-img">
+        <div class="title">谢练彬</div>
+        <button class="toggle-sidebar" onclick="toggleMobileNav()" aria-label="Toggle navigation">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+        </button>
+    </div>
+    <nav class="mobile-nav">
+        <a href="#introduction" onclick="handleMobileNavClick(this)">个人介绍</a>
+        <a href="#certificate" onclick="handleMobileNavClick(this)">所获证书</a>
+        <a href="#skills" onclick="handleMobileNavClick(this)">技能特长</a>
+        <a href="#achievements" onclick="handleMobileNavClick(this)">学术研究</a>
+        <a href="#competitions" onclick="handleMobileNavClick(this)">参与竞赛</a>
+        <a href="#projects" onclick="handleMobileNavClick(this)">项目经历</a>
+        <a href="#works" onclick="handleMobileNavClick(this)">工作经历</a>
+    </nav>
+    <button class="toggle-sidebar" onclick="toggleSidebar()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+    </button>
+    <div class="container">
+        <div class="sidebar">
+            <img src="imgs/xielianbin.png" alt="个人图像" class="profile-img">
+            <h1 class="profile-name">谢练彬</h1>
+            <p class="profile-title">Dr. Lianbin Xie</p>
+            <div class="profile-info">
+                <p>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                    </svg>
+                    硕士研究生
+                </p>
+                <p>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+                        <path d="M9 22V12h6v10"></path>
+                    </svg>
+                    成都理工大学
+                </p>
+                <p>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20.24 12.24a6 6 0 00-8.49-8.49L5 10.5V19h8.5z"></path>
+                        <path d="M16 8L2 22"></path>
+                        <path d="M17.5 15H9"></path>
+                    </svg>
+                    计算机科学与技术
+                </p>
+                <p>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <path d="M22 6l-10 7L2 6"></path>
+                    </svg>
+                    2826389624&#64;qq.com
+                </p>
+            </div>
+            <div class="social-links">
+                <a href="https://github.com/xielianbin" target="_blank">
+                    <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub" style="width: 24px; height: 24px;">
+                    <span>GitHub</span>
+                </a>
+                <a href="https://orcid.org/0009-0005-1747-731X" target="_blank">
+                    <img src="https://orcid.org/sites/default/files/images/orcid_16x16.png" alt="ORCID" style="width: 24px; height: 24px;">
+                    <span>ORCID</span>
+                </a>
+                <a href="https://leetcode.cn/u/xielianbin/" target="_blank">
+                    <img src="https://leetcode.com/_next/static/images/logo-dark-c96c407d175e36c81e236fcfdd682a0b.png" alt="LeetCode" style="width: 24px; height: 24px;">
+                    <span>LeetCode</span>
+                </a>
+            </div>
+            <div class="sidebar-nav">
+                <a href="#introduction" class="active">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span>个人介绍</span>
+                </a>
+                <a href="#certificate">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    <span>所获证书</span>
+                </a>
+                <a href="#skills">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path>
+                        <line x1="16" y1="8" x2="2" y2="22"></line>
+                        <line x1="17.5" y1="15" x2="9" y2="15"></line>
+                    </svg>
+                    <span>技能特长</span>
+                </a>
+                <a href="#achievements">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                        <path d="M2 17l10 5 10-5"></path>
+                        <path d="M2 12l10 5 10-5"></path>
+                    </svg>
+                    <span>学术研究</span>
+                </a>
+                <a href="#competitions">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    <span>参与竞赛</span>
+                </a>
+                <a href="#projects">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <span>项目经历</span>
+                </a>
+                <a href="#works">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                    </svg>
+                    <span>工作经历</span>
+                </a>
+            </div>
+        </div>
 
-<div class="content">
-    <section id="introduction" class="section">
-        <h2>个人介绍</h2>
-        <ul>
-            <li>擅长提升模型的精度和速度</li>
-            <li>对于写代码和创作类的工作有较大的兴趣，对于计算机行业有较大的探索欲望</li>
-            <li>能吃苦耐劳，性格友善，人品正，心态乐观积极向上</li>
-            <li>做事情擅长提前规划，并做好准备工作应对突发情况</li>
-        </ul>
-    </section>
-	
-    <section id="certificate" class="section">
-        <h2>所获证书</h2>
-        <ul>
-            <li>四川省优秀毕业生</li>
-            <li>全国“东方航天港•地卫二杯”遥感影像智能处理算法大赛优胜奖</li>
-            <li>北京智源人工智能研究院颁发的FlagEval大模型优秀贡献者证书</li>
-            <li>四川省蓝桥杯C/C++程序设计二等奖</li>
-            <li>软考中级软件设计师和初级程序员</li>
-            <li>三级数据库，二级Java和Python</li>
-        </ul>
-    </section>
+        <div class="content">
+            <section class="welcome-section">
+                <div class="welcome-content">
+                    <h1 class="welcome-title">欢迎来到我的个人主页</h1>
+                    <p class="welcome-subtitle">谢练彬 | 硕士研究生 | 计算机科学与技术</p>
+                    <p class="welcome-description">专注于计算机视觉和深度学习研究，致力于将先进技术应用于实际问题解决。在这里，您可以了解我的教育背景、研究经历、项目经验以及专业技能。</p>
+                </div>
+            </section>
 
-    <section id="skills" class="section">
-        <h2>技能特长</h2>
-        <ul>
-            <li>精通：Python, Java, C++</li>
-            <li>熟悉：HTML, CSS, JavaScript, React</li>
-            <li>了解：Pandas, NumPy, TensorFlow, Scikit-learn</li>
-        </ul>
-    </section>
+            <section id="introduction" class="section">
+                <h2>个人介绍</h2>
+                <ul class="introduction-list">
+                    <div class="introduction-grid">
+                        <li class="introduction-item">
+                            <span class="label">姓名</span>
+                            <span class="value">谢练彬</span>
+                        </li>
+                        <li class="introduction-item">
+                            <span class="label">居住地</span>
+                            <span class="value">成都</span>
+                        </li>
+                        <li class="introduction-item">
+                            <span class="label">学历</span>
+                            <span class="value">硕士研究生</span>
+                        </li>
+                        <li class="introduction-item">
+                            <span class="label">出生年份</span>
+                            <span class="value">1999</span>
+                        </li>
+                        <li class="introduction-item">
+                            <span class="label">邮箱</span>
+                            <span class="value">2826389624@qq.com</span>
+                        </li>
+                        <li class="introduction-item">
+                            <span class="label">微信</span>
+                            <span class="value">xielianbin2023</span>
+                        </li>
+                    </div>
+                    <li class="introduction-item">
+                        <span class="label">教育背景</span>
+                        <ul class="education-list">
+                            <li class="education-item">
+                                <span class="school">成都理工大学</span>
+                                <span class="major">计算机科学与技术专业</span>
+                                <span class="degree">硕士</span>
+                                <span class="period">2023.09-2026.06</span>
+                            </li>
+                            <li class="education-item">
+                                <span class="school">成都师范大学</span>
+                                <span class="major">计算机科学与技术专业</span>
+                                <span class="degree">学士</span>
+                                <span class="period">2021.09-2023.06</span>
+                            </li>
+                            <li class="education-item">
+                                <span class="school">四川交通职业技术学院</span>
+                                <span class="major">软件技术专业</span>
+                                <span class="degree">专科</span>
+                                <span class="period">2018.09-2021.06</span>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
 
-    <section id="achievements" class="section">
-        <h2>学术研究</h2>
-        <ul>		
-            <li>已收录：Tied and Anchored Stereo Attention Network for Cloud Removal in Optical Remote Sensing Images，二区</li>
-            <li>已收录：MABDT: Multi-scale Attention Boosted Deformable Transformer for Remote Sensing Image Dehazing，二区</li>
-            <li>待收录：</li>
-        </ul>
-    </section>
+            <section id="certificate" class="section">
+                <h2>所获证书</h2>
+                <ul class="certificate-list">
+                    <li class="certificate-item">
+                        <span class="title">四川省优秀毕业生</span>
+                        <span class="issuer">四川省教育厅</span>
+                        <span class="date">2023</span>
+                    </li>
+                    <li class="certificate-item">
+                        <span class="title">全国"东方航天港•地卫二杯"遥感影像智能处理算法大赛优胜奖</span>
+                        <span class="issuer">中国遥感应用协会</span>
+                        <span class="date">2023</span>
+                    </li>
+                    <li class="certificate-item">
+                        <span class="title">FlagEval大模型优秀贡献者证书</span>
+                        <span class="issuer">北京智源人工智能研究院</span>
+                        <span class="date">2023</span>
+                    </li>
+                    <li class="certificate-item">
+                        <span class="title">四川省蓝桥杯C/C++程序设计二等奖</span>
+                        <span class="issuer">蓝桥杯组委会</span>
+                        <span class="date">2022</span>
+                    </li>
+                    <li class="certificate-item">
+                        <span class="title">软考中级软件设计师和初级程序员</span>
+                        <span class="issuer">人力资源和社会保障部</span>
+                        <span class="date">2022</span>
+                    </li>
+                    <li class="certificate-item">
+                        <span class="title">三级数据库，二级Java和Python</span>
+                        <span class="issuer">全国计算机等级考试</span>
+                        <span class="date">2021</span>
+                    </li>
+                </ul>
+            </section>
 
-    <section id="competitions" class="section">
-        <h2>参与竞赛</h2>
-        <ul>
-            <li>“东方航天港•地卫二杯”遥感影像智能处理算法大赛光学SAR融合去云赛道</li>
-            <li>2025年华为软件精英挑战赛</li>
-        </ul>
-    </section>
+            <section id="skills" class="section">
+                <h2>技能特长</h2>
+                <ul class="skills-list">
+                    <li class="skill-category">
+                        <h3>编程语言</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Go</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">C++</span>
+                            <span class="skill-tag">Java</span>
+                        </div>
+                    </li>
+                    <li class="skill-category">
+                        <h3>Web开发</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">HTML</span>
+                            <span class="skill-tag">CSS</span>
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">React</span>
+                        </div>
+                    </li>
+                    <li class="skill-category">
+                        <h3>数据科学</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Pandas</span>
+                            <span class="skill-tag">NumPy</span>
+                            <span class="skill-tag">TensorFlow</span>
+                            <span class="skill-tag">Scikit-learn</span>
+                        </div>
+                    </li>
+                </ul>
+            </section>
 
-    <section id="projects" class="section">
-        <h2>项目经历</h2>
-        <ul>
-            <li>项目一：项目名称XXX，项目描述YYY</li>
-            <li>项目二：项目名称ZZZ，项目描述WWW</li>
-        </ul>
-    </section>
-	
-    <section id="works" class="section">
-        <h2>工作经历</h2>
-        <ul>
-            <li>天立教育集团，AI实习生，2025.05-2025.06</li>
-        </ul>
-    </section>
-	
-    <section id="xp" class="section">
-        <h3 style="padding:20px;"></h3>
-        <h3></h3>
-        <h3></h3>
-        <ul>
-        </ul>
-    </section>
-</div>
+            <section id="achievements" class="section">
+                <h2>学术研究</h2>
+                <ul class="research-list">
+                    <li class="research-item">
+                        <span class="title">Tied and Anchored Stereo Attention Network for Cloud Removal in Optical Remote Sensing Images</span>
+                        <span class="description">使用多模态数据，实现生成无云清晰的遥感图像</span>
+                        <div class="meta">
+                            <span class="journal">二区</span>
+                            <span class="status">已发表</span>
+                        </div>
+                    </li>
+                    <li class="research-item">
+                        <span class="title">MABDT: Multi-scale Attention Boosted Deformable Transformer for Remote Sensing Image Dehazing</span>
+                        <span class="description">使用多模态数据，实现生成无云清晰的遥感图像</span>
+                        <div class="meta">
+                            <span class="journal">二区</span>
+                            <span class="status">已发表</span>
+                        </div>
+                    </li>
+                    <li class="research-item">
+                        <span class="title">Pghe-Net: Physically Guided Dehazing Network with High-Frequency Enhancement for Remote Sensing Images</span>
+                        <span class="description">使用多模态数据，实现生成无云清晰的遥感图像</span>
+                        <div class="meta">
+                            <span class="journal">SCI</span>
+                            <span class="status">已发表</span>
+                        </div>
+                    </li>
+                    <li class="research-item">
+                        <span class="title">Cloud Removal Advances: A Comprehensive Review and Analysis for Optical Remote Sensing Images</span>
+                        <span class="description">使用多模态数据，实现生成无云清晰的遥感图像</span>
+                        <div class="meta">
+                            <span class="journal">SCI</span>
+                            <span class="status">待收录</span>
+                        </div>
+                    </li>
+                </ul>
+            </section>
 
-<div class="nav">
-    <a href="#introduction">个人介绍</a>
-    <a href="#certificate">所获证书</a>
-    <a href="#skills">技能特长</a>
-    <a href="#achievements">学术研究</a>
-    <a href="#competitions">参与竞赛</a>
-    <a href="#projects">项目经历</a>
-    <a href="#works">工作经历</a>
-</div>
+            <section id="competitions" class="section">
+                <h2>参与竞赛</h2>
+                <ul class="competition-list">
+                    <li class="competition-item">
+                        <span class="name">"东方航天港•地卫二杯"遥感影像智能处理算法大赛光学SAR融合去云赛道</span>
+                        <span class="description">使用多模态数据，实现生成无云清晰的遥感图像</span>
+                        <div class="meta">
+                            <span class="award">优胜奖</span>
+                            <span class="date">2023</span>
+                        </div>
+                    </li>
+                    <li class="competition-item">
+                        <span class="name">2025年华为软件精英挑战赛</span>
+                        <span class="description">使用C++语言设计一款数据存储加速系统，根据读取和写入的速度，还有正确率来判分</span>
+                        <div class="meta">
+                            <span class="award">进行中</span>
+                            <span class="date">2025</span>
+                        </div>
+                    </li>
+                </ul>
+            </section>
 
+            <section id="projects" class="section">
+                <h2>项目经历</h2>
+                <ul class="project-list">
+                    <li class="project-item">
+                        <span class="name">多模态遥感图像去云</span>
+                        <span class="description">使用多模态数据，实现生成无云清晰的遥感图像</span>
+                        <div class="meta">
+                            <span class="role">负责人</span>
+                            <span class="date">2024</span>
+                        </div>
+                    </li>
+                    <li class="project-item">
+                        <span class="name">初高中数学试题识别</span>
+                        <span class="description">使用大模型技术，识别初高中数学试题，并给出答案</span>
+                        <div class="meta">
+                            <span class="role">参与者</span>
+                            <span class="date">2025</span>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <section id="works" class="section">
+                <h2>工作经历</h2>
+                <ul class="work-list">
+                    <li class="work-item">
+                        <span class="company">天立教育集团</span>
+                        <span class="description">使用Python语言，设计一款AI智能批改系统，根据学生的答题情况，给出相应的评价和建议</span>
+                        <div class="meta">
+                            <span class="position">AI实习生</span>
+                            <span class="period">2025.05-2025.06</span>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="contact-section">
+                <h2>联系我</h2>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <path d="M22 6l-10 7L2 6"></path>
+                        </svg>
+                        <span class="label">邮箱：</span>
+                        <span class="value">2826389624@qq.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                        </svg>
+                        <span class="label">微信：</span>
+                        <span class="value">xielianbin2023</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const content = document.querySelector('.content');
+            const toggleBtn = document.querySelector('.toggle-sidebar');
+            
+            sidebar.classList.toggle('collapsed');
+            content.classList.toggle('expanded');
+            toggleBtn.classList.toggle('collapsed');
+        }
+
+        function toggleMobileNav() {
+            const mobileNav = document.querySelector('.mobile-nav');
+            const toggleBtn = document.querySelector('.mobile-header .toggle-sidebar');
+            
+            mobileNav.classList.toggle('active');
+            toggleBtn.classList.toggle('active');
+        }
+
+        function handleMobileNavClick(element) {
+            // 移除所有active类
+            document.querySelectorAll('.mobile-nav a, .sidebar-nav a').forEach(a => a.classList.remove('active'));
+            // 添加active类到当前点击的链接
+            element.classList.add('active');
+            
+            // 同步侧边栏状态
+            const targetId = element.getAttribute('href');
+            const sidebarLink = document.querySelector(`.sidebar-nav a[href="${targetId}"]`);
+            if (sidebarLink) {
+                sidebarLink.classList.add('active');
+            }
+            
+            // 平滑滚动到目标位置
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                const headerOffset = 70;
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+            
+            // 关闭移动导航
+            toggleMobileNav();
+        }
+
+        // 监听滚动事件，更新当前活动的导航项
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.mobile-nav a, .sidebar-nav a');
+            
+            let currentSection = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 100) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === currentSection) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // 初始化时设置正确的活动状态
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.mobile-nav a, .sidebar-nav a');
+            
+            let currentSection = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 100) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === currentSection) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // 监听窗口大小变化
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                document.querySelector('.mobile-nav').classList.remove('active');
+                document.querySelector('.mobile-header .toggle-sidebar').classList.remove('active');
+            }
+        });
+    </script>
 </body>
+
 </html>
